@@ -2,6 +2,6 @@
 
 The goal of this project is to create some kind of **real time game**, let's say a _tower defence_ for the time being.
 
-### [Vaatimusmäärittely](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
-
+#### [Vaatimusmäärittely](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
 #### [Laskarit](https://github.com/laitiii/ot-harjoitustyo/tree/main/laskarit)
+#### [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
