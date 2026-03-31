@@ -11,7 +11,6 @@ The game is tested to work on Python 3.12.3, newer versions might be incompatibl
 ## Documentation
 
 - [Vaatimusmäärittely](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
-- [Laskarit](https://github.com/laitiii/ot-harjoitustyo/tree/main/laskarit)
 - [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/changelog.md)
 
