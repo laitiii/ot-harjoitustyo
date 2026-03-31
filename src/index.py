@@ -25,8 +25,6 @@ class PyTD:
 
         self.load_images()
 
-        self.game_loop()
-    
     def load_images(self):
         self.images = []
         for name in ["grass", "path"]:
@@ -57,6 +55,9 @@ class PyTD:
             if event.type == pygame.QUIT:
                 sys.exit()
 
+    def run(self):
+        self.game_loop()
+
     def draw(self):
         self.screen.fill((0, 0, 0))
 
@@ -68,4 +69,5 @@ class PyTD:
         pygame.display.flip()
 
 if __name__ == "__main__":
-    PyTD()
+    game = PyTD()
+    game.run()
