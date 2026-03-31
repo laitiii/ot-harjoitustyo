@@ -6,5 +6,5 @@
 | 29.3. | 2    | pelin alustava suunnittelu |
 | 30.3. | 3    | pelin koodauksen aloitus |
 | 31.3. | 2    | pelin koodaus |
-|  | 1    | testien suunnittelu |
+|  | 2    | testien suunnittelu ja toiminnan selvitys pygamessa |
 |  | 2    | testien koodaus |
