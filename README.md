@@ -1,7 +1,50 @@
 # PyTD
 
-The goal of this project is to create some kind of **real time game**, let's say a _tower defence_ for the time being.
+This project is a tower defense game. The goal of the game is to defeat enemies moving along a path by placing different types of towers along the path.
 
-#### [Vaatimusmäärittely](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
-#### [Laskarit](https://github.com/laitiii/ot-harjoitustyo/tree/main/laskarit)
-#### [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
+In its current state the game only creates the level and there is no actual gameplay. 
+
+## Notice about Python version
+
+The game is tested to work on Python 3.12.3, newer versions might be incompatible. 
+
+## Documentation
+
+- [Vaatimusmäärittely](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
+- [Laskarit](https://github.com/laitiii/ot-harjoitustyo/tree/main/laskarit)
+- [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
+- [Changelog](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/changelog.md)
+
+## Installation 
+
+1. Install dependencies:
+
+```bash
+poetry install
+```
+
+2. Start the game:
+
+```bash
+poetry run invoke start
+```
+
+## Commands
+
+### Testing
+
+Tests are run with:
+
+```bash
+poetry run invoke test
+```
+
+### Test coverage
+
+A test coverage report can be generated with the following command:
+
+```bash
+poetry run invoke coverage-report
+```
+
+The report is generated in the htmlcov folder and can be viewed by opening the index.html in your browser of choice. 
