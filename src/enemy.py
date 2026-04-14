@@ -5,7 +5,8 @@ class Enemy:
         self.x = x
         self.y = y
         self.target_index = 1
-        self.speed = 0.04
+        self.speed = 0.05
+        self.reward = 10
 
     def move(self, path):
         if self.target_index >= len(path):

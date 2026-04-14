@@ -16,6 +16,8 @@ class PyTD:
         self.state = "menu"
         self.new_game()
         self.enemies = []
+        self.lives = 10
+        self.money = 0
 
         self.height = len(self.level_map)
         self.width = len(self.level_map[0])
@@ -112,9 +114,14 @@ class PyTD:
 
                 if enemy.is_finished(self.path):
                     despawn_list.append(enemy)
+                    self.lives -= 1
 
             for enemy in despawn_list:
                 self.enemies.remove(enemy)
+
+        if self.lives <= 0:
+            self.state = "menu"
+            print("Game Over")
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -147,6 +154,10 @@ class PyTD:
             self.renderer.draw_menu()
         elif self.state == "game":
             self.renderer.draw_game(self.enemies, self.height, self.width)
+
+            font = pygame.font.SysFont(None, 36)
+            text = font.render(f"Lives: {self.lives}  Money: {self.money}", True, (255, 255, 255))
+            self.screen.blit(text, (10, 10))
 
         pygame.display.flip()
 
