@@ -2,7 +2,7 @@
 
 This project is a tower defense game. The goal of the game is to defeat enemies moving along a path by placing different types of towers along the path.
 
-In its current state the game only creates the level and there is no actual gameplay. 
+Currently there is a start screen where you can start the game by pressing space. You can spawn an enemy by pressing space, automatic waves are not yet implemented. 
 
 ## Notice about Python version
 
