@@ -2,6 +2,7 @@ import sys
 import os
 import pygame
 from enemy import Enemy
+from renderer import Renderer
 
 class PyTD:
     TILE_SIZE = 64
@@ -14,6 +15,7 @@ class PyTD:
 
         self.state = "menu"
         self.new_game()
+        self.enemies = []
 
         self.height = len(self.level_map)
         self.width = len(self.level_map[0])
@@ -26,6 +28,13 @@ class PyTD:
         pygame.display.set_caption("PyTD")
 
         self.load_images()
+
+        self.renderer = Renderer(
+            self.screen,
+            self.scale,
+            self.level_map,
+            self.images
+        )
 
     def load_images(self):
         self.images = []
@@ -83,10 +92,7 @@ class PyTD:
             (7, 6),
             (8, 6),
             (9, 6),
-            (10, 6)
         ]
-
-        self.enemies = []
 
     def game_loop(self):
         clock = pygame.time.Clock()
@@ -98,27 +104,38 @@ class PyTD:
             clock.tick(60)
 
     def update(self):
-        despawn_list = []
+        if self.state == "game":
+            despawn_list = []
 
-        for enemy in self.enemies:
-            enemy.move(self.path)
+            for enemy in self.enemies:
+                enemy.move(self.path)
 
-            if enemy.is_finished(self.path):
-                despawn_list.append(enemy)
+                if enemy.is_finished(self.path):
+                    despawn_list.append(enemy)
 
-        for enemy in despawn_list:
-            self.enemies.remove(enemy)
+            for enemy in despawn_list:
+                self.enemies.remove(enemy)
 
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                enemy = Enemy(0, 1)
-                self.enemies.append(enemy)
-                print("Enemy spawned")
+            if event.type != pygame.KEYDOWN:
+                continue
 
+            if self.state == "menu":
+                if event.key == pygame.K_SPACE:
+                    self.state = "game"
+                    self.enemies = []
+                    print("Game started")
+                continue
+
+            if self.state == "game":
+                if event.key == pygame.K_SPACE:
+                    enemy = Enemy(0, 1)
+                    self.enemies.append(enemy)
+                    print("Enemy spawned")
 
     def run(self):
         self.game_loop()
@@ -126,21 +143,10 @@ class PyTD:
     def draw(self):
         self.screen.fill((0, 0, 0))
 
-        for y in range(self.height):
-            for x in range(self.width):
-                image = self.images[self.level_map[y][x]]
-                self.screen.blit(image, (x * self.scale, y * self.scale))
-
-        for enemy in self.enemies:
-            pygame.draw.circle(
-                self.screen,
-                (255, 0, 0),
-                (
-                    enemy.x * self.scale + self.scale // 2,
-                    enemy.y * self.scale + self.scale // 2
-                ),
-                15
-            )
+        if self.state == "menu":
+            self.renderer.draw_menu()
+        elif self.state == "game":
+            self.renderer.draw_game(self.enemies, self.height, self.width)
 
         pygame.display.flip()
 

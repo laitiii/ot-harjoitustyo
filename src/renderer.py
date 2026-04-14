@@ -1,0 +1,30 @@
+import pygame
+
+class Renderer:
+    def __init__(self, screen, scale, level_map, images):
+        self.screen = screen
+        self.scale = scale
+        self.level_map = level_map
+        self.images = images
+
+    def draw_game(self, enemies, height, width):
+        for y in range(height):
+            for x in range(width):
+                image = self.images[self.level_map[y][x]]
+                self.screen.blit(image, (x * self.scale, y * self.scale))
+
+        for enemy in enemies:
+            pygame.draw.circle(
+                self.screen,
+                (255, 0, 0),
+                (
+                    int(enemy.x * self.scale + self.scale // 2),
+                    int(enemy.y * self.scale + self.scale // 2)
+                ),
+                15
+            )
+
+    def draw_menu(self):
+        font = pygame.font.SysFont(None, 60)
+        text = font.render("Press SPACE to start", True, (255, 255, 255))
+        self.screen.blit(text, (100, 200))
