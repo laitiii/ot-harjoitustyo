@@ -48,3 +48,11 @@ poetry run invoke coverage-report
 ```
 
 The report is generated in the htmlcov folder and can be viewed by opening the index.html in your browser of choice. 
+
+### Test pylint
+
+A pylint code quality check can be done with:
+
+```bash
+poetry run invoke pylint
+```
