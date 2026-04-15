@@ -119,7 +119,7 @@ class PyTD:
             for enemy in despawn_list:
                 self.enemies.remove(enemy)
 
-        if self.lives <= 0:
+        if self.state == "game" and self.lives <= 0:
             self.state = "menu"
             print("Game Over")
 
@@ -133,8 +133,11 @@ class PyTD:
 
             if self.state == "menu":
                 if event.key == pygame.K_SPACE:
-                    self.state = "game"
+                    self.new_game()
                     self.enemies = []
+                    self.lives = 10
+                    self.money = 0
+                    self.state = "game"
                     print("Game started")
                 continue
 
