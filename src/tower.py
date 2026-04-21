@@ -1,5 +1,4 @@
 import math
-from enemy import Enemy
 
 class Tower:
     COST = 50
