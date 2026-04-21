@@ -2,6 +2,7 @@ import sys
 import os
 import pygame
 from enemy import Enemy
+from tower import Tower
 from renderer import Renderer
 
 class PyTD:
@@ -15,6 +16,7 @@ class PyTD:
 
         self.state = "menu"
         self.new_game()
+        self.towers = []
         self.enemies = []
         self.lives = 10
         self.money = 0
@@ -40,7 +42,7 @@ class PyTD:
 
     def load_images(self):
         self.images = []
-        for name in ["grass", "path"]:
+        for name in ["grass", "path", "turret"]:
             image_path = os.path.join(self.assets_dir, f"{name}.png")
             self.images.append(pygame.image.load(image_path).convert())
 
@@ -96,6 +98,32 @@ class PyTD:
             (9, 6),
         ]
 
+    def place_tower(self, mouse_pos):
+        mx, my = mouse_pos
+
+        grid_x = mx // self.TILE_SIZE
+        grid_y = my // self.TILE_SIZE
+
+        # bounds check
+        if grid_y < 0 or grid_y >= self.height:
+            return
+        if grid_x < 0 or grid_x >= self.width:
+            return
+
+        # prevent placement on path
+        if self.level_map[grid_y][grid_x] == 1:
+            return
+
+        # prevent tower stacking
+        for tower in self.towers:
+            if int(tower.x) == grid_x and int(tower.y) == grid_y:
+                return
+
+        tower = Tower(grid_x, grid_y)
+        self.towers.append(tower)
+
+        print(f"Tower placed at {grid_x}, {grid_y}")
+
     def game_loop(self):
         clock = pygame.time.Clock()
 
@@ -119,6 +147,9 @@ class PyTD:
             for enemy in despawn_list:
                 self.enemies.remove(enemy)
 
+            for tower in self.towers:
+                tower.update(self.enemies)
+
         if self.state == "game" and self.lives <= 0:
             self.state = "menu"
             print("Game Over")
@@ -128,6 +159,11 @@ class PyTD:
             if event.type == pygame.QUIT:
                 sys.exit()
 
+            if self.state == "game":
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        self.place_tower(pygame.mouse.get_pos())
+
             if event.type != pygame.KEYDOWN:
                 continue
 
@@ -135,6 +171,7 @@ class PyTD:
                 if event.key == pygame.K_SPACE:
                     self.new_game()
                     self.enemies = []
+                    self.towers = []
                     self.lives = 10
                     self.money = 0
                     self.state = "game"
@@ -157,6 +194,7 @@ class PyTD:
             self.renderer.draw_menu()
         elif self.state == "game":
             self.renderer.draw_game(self.enemies, self.height, self.width)
+            self.renderer.draw_towers(self.towers)
 
             font = pygame.font.SysFont(None, 36)
             text = font.render(f"Lives: {self.lives}  Money: {self.money}", True, (255, 255, 255))

@@ -28,3 +28,15 @@ class Renderer:
         font = pygame.font.SysFont(None, 60)
         text = font.render("Press SPACE to start", True, (255, 255, 255))
         self.screen.blit(text, (100, 200))
+
+    def draw_towers(self, towers):
+        for tower in towers:
+            pygame.draw.circle(
+                self.screen,
+                (0, 0, 255),
+                (
+                    int(tower.x * self.scale + self.scale // 2),
+                    int(tower.y * self.scale + self.scale // 2)
+                ),
+                12
+            )
