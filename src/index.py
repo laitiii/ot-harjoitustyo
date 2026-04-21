@@ -19,7 +19,7 @@ class PyTD:
         self.towers = []
         self.enemies = []
         self.lives = 10
-        self.money = 0
+        self.money = 100
 
         self.height = len(self.level_map)
         self.width = len(self.level_map[0])
@@ -104,6 +104,11 @@ class PyTD:
         grid_x = mx // self.TILE_SIZE
         grid_y = my // self.TILE_SIZE
 
+        # money check
+        if self.money < Tower.COST:
+            print("Not enough money")
+            return
+
         # bounds check
         if grid_y < 0 or grid_y >= self.height:
             return
@@ -121,6 +126,7 @@ class PyTD:
 
         tower = Tower(grid_x, grid_y)
         self.towers.append(tower)
+        self.money -= Tower.COST
 
         print(f"Tower placed at {grid_x}, {grid_y}")
 
@@ -183,7 +189,7 @@ class PyTD:
                     self.enemies = []
                     self.towers = []
                     self.lives = 10
-                    self.money = 0
+                    self.money = 100
                     self.state = "game"
                     print("Game started")
                 continue

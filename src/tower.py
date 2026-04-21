@@ -1,7 +1,9 @@
 import math
-import enemy
+from enemy import Enemy
 
 class Tower:
+    COST = 50
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
