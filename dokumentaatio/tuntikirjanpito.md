@@ -23,5 +23,11 @@
 |  | 0.5    | sovelluksen testaaminen cubbli linuxilla |
 |  | 0.5    | sovelluksen rakennekaavio |
 ||||
-
-
+| Viikko 5| 6.5 | |
+| 19.4| 1 | pelin suunnittelu |
+| 20.4 | 2 | pelin koodaus (tornit) |
+|  | 0.5 | koodin parantelu |
+| 21.4 | 2 | testien koodaus ja testaaminen |
+|  | 0.5 | koodin parantelu |
+|  | 0.5 | dokumentaatio |
+||||
