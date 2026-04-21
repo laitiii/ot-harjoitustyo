@@ -9,3 +9,11 @@
 - Vihollisten luonti toimii ja ne liikkuvat polkua pitkin kartalla
 - Käyttäjän elämät vähenevät, jos viholliset pääsevät loppuun asti
 - Vihollisten logiikka sekä renderöinti testattu
+
+## Viikko 5
+
+- Käyttäjä voi asettaa torneja klikkaamalla hiirellä ja ne maksavat rahaa
+- Tornit ampuvat rataa pitkin kulkevia vihollisia
+- Viholliset tuhoutuvat ja niistä saa rahaa
+- Pelissä on ohjeet näppäimille
+- Sovelluksen päälogiikan toiminnan testausta laajennettu
