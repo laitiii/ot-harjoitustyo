@@ -20,16 +20,16 @@ Aloitusnäkymästä pelaaja voi käynnistää uuden pelin. Pelinäkymässä näk
 ### Pelaamisen aikana
 
 - Viholliset liikkuvat kentällä ennalta määriteltyä reittiä pitkin ✅
-- Pelaaja voi sijoittaa torneja puolustamaan reitin varrelle käyttämällä rahaa
-- Tornit hyökkäävät automaattisesti kantamansa sisällä oleviin vihollisiin
-- Vihollisen tuhoamisesta pelaaja saa rahaa
+- Pelaaja voi sijoittaa torneja puolustamaan reitin varrelle käyttämällä rahaa ✅
+- Tornit hyökkäävät automaattisesti kantamansa sisällä oleviin vihollisiin ✅
+- Vihollisen tuhoamisesta pelaaja saa rahaa ✅
 - Jos vihollinen pääsee maaliin asti, pelaaja menettää elämiä ✅
 - Peli päättyy, kun pelaajan elämät loppuvat ✅
 
 ### Pelin päättyessä
 
 - Pelaajalle näytetään game over tai victory -näkymä
-- Pelaaja voi halutessaan aloittaa uuden pelin alusta
+- Pelaaja voi halutessaan aloittaa uuden pelin alusta 
 
 ## Jatkokehitysideoita
 
