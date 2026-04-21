@@ -31,12 +31,7 @@ class Renderer:
 
     def draw_towers(self, towers):
         for tower in towers:
-            pygame.draw.circle(
-                self.screen,
-                (0, 0, 255),
-                (
-                    int(tower.x * self.scale + self.scale // 2),
-                    int(tower.y * self.scale + self.scale // 2)
-                ),
-                12
-            )
+            x = int(tower.x * self.scale)
+            y = int(tower.y * self.scale)
+
+            self.screen.blit(self.images[2], (x, y))
