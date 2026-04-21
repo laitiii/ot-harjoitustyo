@@ -2,7 +2,9 @@
 
 This project is a tower defense game. The goal of the game is to defeat enemies moving along a path by placing different types of towers along the path.
 
-Currently there is a start screen where you can start the game by pressing space. You can spawn an enemy by pressing space, automatic waves are not yet implemented. 
+Currently there is a start screen where you can start the game by pressing space. You can spawn an enemy by pressing space (automatic waves are not yet implemented). 
+
+You can place a tower with money and it will shoot at enemies in range (no visual projectile or range yet). You earn more money by defeating enemies.
 
 ## Notice about Python version
 
