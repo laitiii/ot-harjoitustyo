@@ -213,8 +213,14 @@ class PyTD:
             self.renderer.draw_towers(self.towers)
 
             font = pygame.font.SysFont(None, 36)
-            text = font.render(f"Lives: {self.lives}  Money: {self.money}", True, (255, 255, 255))
-            self.screen.blit(text, (10, 10))
+            stats = font.render(f"Lives: {self.lives}  Money: {self.money}", True, (255, 255, 255))
+            towercost = font.render(f"Tower cost: {Tower.COST}", True, (255, 255, 255))
+            keybind1 = font.render("LMB: place tower", True, (255, 255, 255))
+            keybind2 = font.render("SPACE: spawn enemy", True, (255, 255, 255))
+            self.screen.blit(stats, (10, 10))
+            self.screen.blit(towercost, (10, 50))
+            self.screen.blit(keybind1, (10, 90))
+            self.screen.blit(keybind2, (10, 130))
 
         pygame.display.flip()
 
