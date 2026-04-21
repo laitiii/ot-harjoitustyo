@@ -1,4 +1,5 @@
 import math
+import enemy
 
 class Tower:
     def __init__(self, x, y):
@@ -20,7 +21,7 @@ class Tower:
 
         for enemy in enemies:
             if self.in_range(enemy):
-                # placeholder: "shoot"
-                print("Tower hits enemy")
+                enemy.health -= 1
+                print(f"Enemy hit, health left: {enemy.health}")
                 self.cooldown = self.fire_rate
                 break

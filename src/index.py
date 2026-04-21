@@ -150,6 +150,16 @@ class PyTD:
             for tower in self.towers:
                 tower.update(self.enemies)
 
+            dead_enemies = []
+
+            for enemy in self.enemies:
+                if enemy.health <= 0:
+                    dead_enemies.append(enemy)
+                    self.money += enemy.reward
+
+            for enemy in dead_enemies:
+                self.enemies.remove(enemy)
+
         if self.state == "game" and self.lives <= 0:
             self.state = "menu"
             print("Game Over")
