@@ -7,6 +7,7 @@ from renderer import Renderer
 
 class PyTD:
     TILE_SIZE = 64
+    SPAWN_INTERVAL = 1000
 
     def __init__(self):
         pygame.init()
@@ -15,9 +16,12 @@ class PyTD:
         self.assets_dir = os.path.join(self.base_dir, "assets")
 
         self.state = "menu"
+        self.wave = 1
+        self.wave_enemies_pending = 0
+        self.next_spawn_time = 0
         self.new_game()
-        self.towers = []
-        self.enemies = []
+        self.towers: list[Tower] = []
+        self.enemies: list[Enemy] = []
         self.lives = 10
         self.money = 100
 
@@ -97,6 +101,23 @@ class PyTD:
             (8, 6),
             (9, 6),
         ]
+        self.wave = 1
+        self.wave_enemies_pending = 0
+        self.next_spawn_time = 0
+
+    def spawn_wave(self):
+        enemy_count = self.wave * 2
+
+        if enemy_count > 0:
+            self.enemies = [Enemy(0, 1)]
+            self.wave_enemies_pending = enemy_count - 1
+            self.next_spawn_time = pygame.time.get_ticks() + self.SPAWN_INTERVAL
+        else:
+            self.enemies = []
+            self.wave_enemies_pending = 0
+            self.next_spawn_time = 0
+
+        print(f"Wave {self.wave} started with {enemy_count} enemies")
 
     def place_tower(self, mouse_pos):
         mx, my = mouse_pos
@@ -140,42 +161,64 @@ class PyTD:
             clock.tick(60)
 
     def update(self):
-        if self.state == "game":
-            despawn_list = []
+        if self.state != "game":
+            return
 
-            for enemy in self.enemies:
-                enemy.move(self.path)
+        self.spawn_pending_enemy()
+        self.move_enemies()
+        self.update_towers()
+        self.cleanup_dead_enemies()
+        self.check_wave_state()
 
-                if enemy.is_finished(self.path):
-                    despawn_list.append(enemy)
-                    self.lives -= 1
+    def spawn_pending_enemy(self):
+        current_time = pygame.time.get_ticks()
+        if self.wave_enemies_pending > 0 and current_time >= self.next_spawn_time:
+            self.enemies.append(Enemy(0, 1))
+            self.wave_enemies_pending -= 1
+            self.next_spawn_time = current_time + self.SPAWN_INTERVAL
 
-            for enemy in despawn_list:
-                self.enemies.remove(enemy)
+    def move_enemies(self):
+        despawn_list = []
+        for enemy in self.enemies:
+            enemy.move(self.path)
+            if enemy.is_finished(self.path):
+                despawn_list.append(enemy)
+                self.lives -= 1
 
-            for tower in self.towers:
-                tower.update(self.enemies)
+        for enemy in despawn_list:
+            self.enemies.remove(enemy)
 
-            dead_enemies = []
+    def update_towers(self):
+        for tower in self.towers:
+            tower.update(self.enemies)
 
-            for enemy in self.enemies:
-                if enemy.health <= 0:
-                    dead_enemies.append(enemy)
-                    self.money += enemy.reward
+    def cleanup_dead_enemies(self):
+        dead_enemies = []
+        for enemy in self.enemies:
+            if enemy.health <= 0:
+                dead_enemies.append(enemy)
+                self.money += enemy.reward
 
-            for enemy in dead_enemies:
-                self.enemies.remove(enemy)
+        for enemy in dead_enemies:
+            self.enemies.remove(enemy)
 
-        if self.state == "game" and self.lives <= 0:
+    def check_wave_state(self):
+        if self.lives <= 0:
             self.state = "menu"
             print("Game Over")
+            return
+
+        if not self.enemies and self.wave_enemies_pending == 0:
+            self.state = "build"
+            self.wave += 1
+            print(f"Wave {self.wave - 1} completed")
 
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            if self.state == "game":
+            if self.state in ("game", "build"):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         self.place_tower(pygame.mouse.get_pos())
@@ -190,15 +233,15 @@ class PyTD:
                     self.towers = []
                     self.lives = 10
                     self.money = 100
-                    self.state = "game"
-                    print("Game started")
+                    self.state = "build"
+                    print("Build phase started")
                 continue
 
-            if self.state == "game":
+            if self.state == "build":
                 if event.key == pygame.K_SPACE:
-                    enemy = Enemy(0, 1)
-                    self.enemies.append(enemy)
-                    print("Enemy spawned")
+                    self.spawn_wave()
+                    self.state = "game"
+                return
 
     def run(self):
         self.game_loop()
@@ -208,19 +251,19 @@ class PyTD:
 
         if self.state == "menu":
             self.renderer.draw_menu()
+        elif self.state == "build":
+            self.renderer.draw_build(self.towers, self.height, self.width)
+            self.renderer.draw_status_bar(
+                f"Lives: {self.lives}  Money: {self.money}",
+                f"Build phase · Wave {self.wave}"
+            )
         elif self.state == "game":
             self.renderer.draw_game(self.enemies, self.height, self.width)
             self.renderer.draw_towers(self.towers)
-
-            font = pygame.font.SysFont(None, 36)
-            stats = font.render(f"Lives: {self.lives}  Money: {self.money}", True, (255, 255, 255))
-            towercost = font.render(f"Tower cost: {Tower.COST}", True, (255, 255, 255))
-            keybind1 = font.render("LMB: place tower", True, (255, 255, 255))
-            keybind2 = font.render("SPACE: spawn enemy", True, (255, 255, 255))
-            self.screen.blit(stats, (10, 10))
-            self.screen.blit(towercost, (10, 50))
-            self.screen.blit(keybind1, (10, 90))
-            self.screen.blit(keybind2, (10, 130))
+            self.renderer.draw_status_bar(
+                f"Lives: {self.lives}  Money: {self.money}",
+                f"Wave: {self.wave}"
+            )
 
         pygame.display.flip()
 

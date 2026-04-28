@@ -7,11 +7,14 @@ class Renderer:
         self.level_map = level_map
         self.images = images
 
-    def draw_game(self, enemies, height, width):
+    def draw_tiles(self, height, width):
         for y in range(height):
             for x in range(width):
                 image = self.images[self.level_map[y][x]]
                 self.screen.blit(image, (x * self.scale, y * self.scale))
+
+    def draw_game(self, enemies, height, width):
+        self.draw_tiles(height, width)
 
         for enemy in enemies:
             pygame.draw.circle(
@@ -23,6 +26,41 @@ class Renderer:
                 ),
                 15
             )
+
+    def draw_build(self, towers, height, width):
+        self.draw_tiles(height, width)
+        self.draw_towers(towers)
+
+        font = pygame.font.SysFont(None, 36)
+        instructions = font.render(
+            "Press SPACE to launch the next wave",
+            True,
+            (255, 255, 255),
+        )
+        self.screen.blit(instructions, (10, 10))
+
+    def draw_status_bar(self, stats_text, wave_text=None):
+        width = self.scale * len(self.level_map[0])
+        height = self.scale * len(self.level_map)
+        bar_height = 60
+        bar_rect = pygame.Rect(0, height - bar_height, width, bar_height)
+
+        pygame.draw.rect(self.screen, (0, 0, 0), bar_rect)
+        pygame.draw.line(
+            self.screen,
+            (255, 255, 255),
+            (0, height - bar_height),
+            (width, height - bar_height),
+            2,
+        )
+
+        font = pygame.font.SysFont(None, 26)
+        stats = font.render(stats_text, True, (255, 255, 255))
+        self.screen.blit(stats, (10, height - bar_height + 10))
+
+        if wave_text:
+            wave_label = font.render(wave_text, True, (255, 255, 255))
+            self.screen.blit(wave_label, (10, height - bar_height + 32))
 
     def draw_menu(self):
         font = pygame.font.SysFont(None, 60)
