@@ -17,3 +17,11 @@
 - Viholliset tuhoutuvat ja niistä saa rahaa
 - Pelissä on ohjeet näppäimille
 - Sovelluksen päälogiikan toiminnan testausta laajennettu
+
+## Viikko 6
+
+- Pelin alkaessa on rakennusvaihe
+- Viholliset syntyvät aalloissa space näppäintä painamalla
+- Rakennusvaihe toistuu jokaisen aallon jälkeen
+- Docstringiä lisätty koodiin luettavuuden parantamiseksi
+- Uudelle toiminnallisuudelle testejä
