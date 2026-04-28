@@ -2,9 +2,15 @@
 
 This project is a tower defense game. The goal of the game is to defeat enemies moving along a path by placing different types of towers along the path.
 
-Currently there is a start screen where you can start the game by pressing space. You can spawn an enemy by pressing space (automatic waves are not yet implemented). 
+## Short instructions
 
-You can place a tower with money and it will shoot at enemies in range (no visual projectile or range yet). You earn more money by defeating enemies.
+Currently there is a start screen where you can start the game by pressing space. 
+
+At the start you are in the build phase. You can place a tower with money and it will shoot at enemies in range (no visual projectile or range yet). You earn more money by defeating enemies.
+
+By pressing space, you can start the next wave. Enemies come in waves, increasing in amount each wave. After you defeat a wave of enemies, you will enter the build phase again where you can improve your defenses. 
+
+### [Releases](https://github.com/laitiii/ot-harjoitustyo/releases)
 
 ## Notice about Python version
 
@@ -16,6 +22,9 @@ The game is tested to work on Python 3.12.3, newer versions might be incompatibl
 - [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/changelog.md)
 - [Arkkitehtuurikuvaus](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
+
+
+
 
 ## Installation 
 
