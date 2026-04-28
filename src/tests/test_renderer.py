@@ -1,6 +1,6 @@
 import unittest
 import pygame
-from enemy import Enemy
+from entities.enemy import Enemy
 from renderer import Renderer
 
 

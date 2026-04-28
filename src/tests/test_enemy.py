@@ -1,5 +1,5 @@
 import unittest
-from enemy import Enemy
+from entities.enemy import Enemy
 
 
 class TestEnemy(unittest.TestCase):

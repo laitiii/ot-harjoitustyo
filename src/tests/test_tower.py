@@ -1,6 +1,6 @@
 import unittest
-from tower import Tower
-from enemy import Enemy
+from entities.tower import Tower
+from entities.enemy import Enemy
 
 
 class TestTower(unittest.TestCase):

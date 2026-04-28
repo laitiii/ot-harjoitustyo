@@ -1,8 +1,8 @@
 import sys
 import os
 import pygame
-from enemy import Enemy
-from tower import Tower
+from entities.enemy import Enemy
+from entities.tower import Tower
 from renderer import Renderer
 
 class PyTD:
