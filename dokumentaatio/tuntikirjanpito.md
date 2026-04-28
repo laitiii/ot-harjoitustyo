@@ -31,3 +31,10 @@
 |  | 0.5 | koodin parantelu |
 |  | 0.5 | dokumentaatio |
 ||||
+| Viikko 6| 9 | |
+| 26.4 | 3 | Pelin koodaus (aallot) |
+| 27.4 | 3 | Koodin refaktorointi ja parantelu |
+| 28.4 | 1 | Koodin parantelu |
+|  | 1 | Testien koodaus |
+|  | 1 | Docstring |
+||||
