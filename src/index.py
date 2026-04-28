@@ -6,6 +6,10 @@ from entities.tower import Tower
 from renderer import Renderer
 
 class PyTD:
+    """Main tower defense game class.
+
+    Manages the game loop, rendering, wave progression, and player state.
+    """
     TILE_SIZE = 64
     SPAWN_INTERVAL = 1000
 
@@ -45,12 +49,14 @@ class PyTD:
         )
 
     def load_images(self):
+        """Load the game tile and turret images from disk."""
         self.images = []
         for name in ["grass", "path", "turret"]:
             image_path = os.path.join(self.assets_dir, f"{name}.png")
             self.images.append(pygame.image.load(image_path).convert())
 
     def new_game(self):
+        """Reset the level map and path for a new game."""
         self.level_map = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
@@ -106,6 +112,10 @@ class PyTD:
         self.next_spawn_time = 0
 
     def spawn_wave(self):
+        """Start the next wave of enemies.
+
+        Spawns one enemy immediately and schedules the remaining enemies to spawn in intervals.
+        """
         enemy_count = self.wave * 2
 
         if enemy_count > 0:
@@ -120,6 +130,11 @@ class PyTD:
         print(f"Wave {self.wave} started with {enemy_count} enemies")
 
     def place_tower(self, mouse_pos):
+        """Place a tower at the mouse position if placement is valid.
+
+        Args:
+            mouse_pos: Tuple of (x, y) screen coordinates.
+        """
         mx, my = mouse_pos
 
         grid_x = mx // self.TILE_SIZE
@@ -161,6 +176,10 @@ class PyTD:
             clock.tick(60)
 
     def update(self):
+        """Update the game state during each frame.
+
+        Only performs game updates when the state is "game".
+        """
         if self.state != "game":
             return
 
@@ -171,6 +190,7 @@ class PyTD:
         self.check_wave_state()
 
     def spawn_pending_enemy(self):
+        """Spawn the next queued enemy when its spawn time is reached."""
         current_time = pygame.time.get_ticks()
         if self.wave_enemies_pending > 0 and current_time >= self.next_spawn_time:
             self.enemies.append(Enemy(0, 1))
@@ -178,6 +198,7 @@ class PyTD:
             self.next_spawn_time = current_time + self.SPAWN_INTERVAL
 
     def move_enemies(self):
+        """Move each active enemy along the defined path."""
         despawn_list = []
         for enemy in self.enemies:
             enemy.move(self.path)
@@ -189,10 +210,12 @@ class PyTD:
             self.enemies.remove(enemy)
 
     def update_towers(self):
+        """Update all towers so they can attack visible enemies."""
         for tower in self.towers:
             tower.update(self.enemies)
 
     def cleanup_dead_enemies(self):
+        """Remove enemies with zero health and award the player their reward."""
         dead_enemies = []
         for enemy in self.enemies:
             if enemy.health <= 0:
@@ -203,6 +226,7 @@ class PyTD:
             self.enemies.remove(enemy)
 
     def check_wave_state(self):
+        """Check whether the wave is finished or the game is over."""
         if self.lives <= 0:
             self.state = "menu"
             print("Game Over")

@@ -1,6 +1,7 @@
 import math
 
 class Tower:
+    """Tower that attacks enemies within range."""
     COST = 50
 
     def __init__(self, x, y):
@@ -11,11 +12,16 @@ class Tower:
         self.cooldown = 0
 
     def in_range(self, enemy):
+        """Return True if the enemy is within the tower's attack radius."""
         dx = enemy.x - self.x
         dy = enemy.y - self.y
         return math.hypot(dx, dy) <= self.range
 
     def update(self, enemies):
+        """Attempt to attack the first enemy within range.
+
+        Applies cooldown before the next shot is allowed.
+        """
         if self.cooldown > 0:
             self.cooldown -= 1
             return

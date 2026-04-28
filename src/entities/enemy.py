@@ -1,6 +1,8 @@
 import math
 
 class Enemy:
+    """Game enemy that follows a predefined path."""
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -10,6 +12,7 @@ class Enemy:
         self.health = 3
 
     def move(self, path):
+        """Move the enemy toward the next path waypoint."""
         if self.target_index >= len(path):
             return
 
@@ -28,4 +31,5 @@ class Enemy:
             self.y += self.speed * dy / dist
 
     def is_finished(self, path):
+        """Return True if the enemy has reached the end of the path."""
         return self.target_index >= len(path)
