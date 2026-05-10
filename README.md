@@ -16,6 +16,7 @@ The game is tested to work on Python 3.12.3, newer versions might be incompatibl
 - [Tuntikirjanpito](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/changelog.md)
 - [Arkkitehtuurikuvaus](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
+- [Testausdokumentti](https://github.com/laitiii/ot-harjoitustyo/blob/main/dokumentaatio/testaus.md)
 
 
 ## Installation 
