@@ -39,34 +39,26 @@ Kuvaa yhden frame-päivityksen (≈60 FPS) korkean tason tapahtumat: tapahtumank
 
 ```mermaid
 sequenceDiagram
-    participant Main as index.py
+    participant Index
     participant GC as GameController
-    participant WM as WaveManager
-    participant R as Renderer
-    participant E as Enemy
-    participant T as Tower
-    participant PG as Pygame
+    participant Renderer
+    participant WaveMgr as WaveManager
+    participant Entities
 
-    Main->>GC: initialize game and run
-    loop FrameLoop
-        GC->>PG: poll events
-        alt build_state_and_SPACE
-            GC->>WM: start_wave wave spawn_pos
-            WM-->>GC: spawn_positions
-            GC->>E: spawn enemies
+    Index->>GC: initialize and run
+    loop each frame
+        GC->>Index: poll events
+        alt build + SPACE
+            GC->>WaveMgr: start_wave
+            WaveMgr-->>GC: spawn_positions
+            GC->>Entities: spawn enemies
         end
-        GC->>R: draw state, enemies, towers
-        GC->>GC: update
-        GC->>WM: spawn_pending_enemy now spawn_pos
-        WM-->>GC: spawn_pos_or_None
-        alt spawn_pos_returned
-            GC->>E: create enemy
-        end
-        GC->>E: move enemies
-        GC->>T: update towers
-        T-->>E: damage enemy
-        GC->>GC: cleanup_dead_enemies
-        GC->>PG: clock_tick
+        GC->>Renderer: draw state
+        GC->>WaveMgr: spawn_pending_enemy
+        WaveMgr-->>GC: spawn_pos or none
+        GC->>Entities: update_all (move, attack, cleanup)
+        GC->>GC: check_wave_state
+        GC->>Index: tick 60
     end
 ```
 
