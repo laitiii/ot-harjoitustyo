@@ -74,6 +74,25 @@ class Renderer:
         text = font.render("Press SPACE to start", True, (255, 255, 255))
         self.screen.blit(text, (100, 200))
 
+    def draw_game_over(self):
+        """Draw the game over screen prompt."""
+        title_font = pygame.font.SysFont(None, 72)
+        subtitle_font = pygame.font.SysFont(None, 40)
+
+        title = title_font.render("Game over", True, (255, 255, 255))
+        subtitle = subtitle_font.render("Press SPACE to restart", True, (255, 255, 255))
+
+        screen_width = self.scale * len(self.level_map[0])
+        screen_height = self.scale * len(self.level_map)
+
+        title_x = (screen_width - title.get_width()) // 2
+        title_y = (screen_height - title.get_height()) // 2 - 40
+        subtitle_x = (screen_width - subtitle.get_width()) // 2
+        subtitle_y = title_y + title.get_height() + 20
+
+        self.screen.blit(title, (title_x, title_y))
+        self.screen.blit(subtitle, (subtitle_x, subtitle_y))
+
     def draw_towers(self, towers):
         """Render all placed towers on the current map."""
         for tower in towers:

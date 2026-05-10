@@ -27,6 +27,7 @@ class PyTD:
         self.wave = 1
         self.wave_enemies_pending = 0
         self.next_spawn_time = 0
+        self.spawn_interval = self.SPAWN_INTERVAL
         self.new_game()
         self.towers: list[Tower] = []
         self.enemies: list[Enemy] = []
@@ -237,7 +238,7 @@ class PyTD:
     def check_wave_state(self):
         """Check whether the wave is finished or the game is over."""
         if self.lives <= 0:
-            self.state = "menu"
+            self.state = "game_over"
             print("Game Over")
             return
 
@@ -270,6 +271,17 @@ class PyTD:
                     print("Build phase started")
                 continue
 
+            if self.state == "game_over":
+                if event.key == pygame.K_SPACE:
+                    self.new_game()
+                    self.enemies = []
+                    self.towers = []
+                    self.lives = 10
+                    self.money = 100
+                    self.state = "build"
+                    print("Restarting after game over")
+                return
+
             if self.state == "build":
                 if event.key == pygame.K_SPACE:
                     self.spawn_wave()
@@ -297,6 +309,8 @@ class PyTD:
                 f"Lives: {self.lives}  Money: {self.money}",
                 f"Wave: {self.wave}"
             )
+        elif self.state == "game_over":
+            self.renderer.draw_game_over()
 
         pygame.display.flip()
 
