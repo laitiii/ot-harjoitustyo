@@ -1,8 +1,10 @@
 import sys
 import os
 import pygame
+import constants
 from entities.enemy import Enemy
 from entities.tower import Tower
+from level_data import LEVEL_MAP, PATH
 from renderer import Renderer
 
 class PyTD:
@@ -10,12 +12,12 @@ class PyTD:
 
     Manages the game loop, rendering, wave progression, and player state.
     """
-    TILE_SIZE = 64
-    BASE_ENEMIES = 3
-    ENEMIES_PER_WAVE = 2
-    SPAWN_INTERVAL = 700
-    MIN_SPAWN_INTERVAL = 100
-    SPAWN_INTERVAL_DECREASE = 50
+    TILE_SIZE = constants.TILE_SIZE
+    BASE_ENEMIES = constants.BASE_ENEMIES
+    ENEMIES_PER_WAVE = constants.ENEMIES_PER_WAVE
+    SPAWN_INTERVAL = constants.SPAWN_INTERVAL
+    MIN_SPAWN_INTERVAL = constants.MIN_SPAWN_INTERVAL
+    SPAWN_INTERVAL_DECREASE = constants.SPAWN_INTERVAL_DECREASE
 
     def __init__(self):
         pygame.init()
@@ -31,8 +33,8 @@ class PyTD:
         self.new_game()
         self.towers: list[Tower] = []
         self.enemies: list[Enemy] = []
-        self.lives = 10
-        self.money = 100
+        self.lives = constants.INITIAL_LIVES
+        self.money = constants.INITIAL_MONEY
 
         self.height = len(self.level_map)
         self.width = len(self.level_map[0])
@@ -62,56 +64,8 @@ class PyTD:
 
     def new_game(self):
         """Reset the level map and path for a new game."""
-        self.level_map = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
-            [0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
-            [0, 1, 1, 1, 0, 1, 1, 1, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 1, 1, 1],
-            [0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-            [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ]
-
-        self.path = [
-            (0, 1),
-            (1, 1),
-            (1, 2),
-            (1, 3),
-            (2, 3),
-            (3, 3),
-            (3, 2),
-            (3, 1),
-            (4, 1),
-            (5, 1),
-            (6, 1),
-            (7, 1),
-            (7, 2),
-            (7, 3),
-            (6, 3),
-            (5, 3),
-            (5, 4),
-            (5, 5),
-            (4, 5),
-            (3, 5),
-            (2, 5),
-            (1, 5),
-            (1, 6),
-            (1, 7),
-            (1, 8),
-            (2, 8),
-            (3, 8),
-            (4, 8),
-            (5, 8),
-            (6, 8),
-            (7, 8),
-            (7, 7),
-            (7, 6),
-            (8, 6),
-            (9, 6),
-        ]
+        self.level_map = LEVEL_MAP
+        self.path = PATH
         self.wave = 1
         self.wave_enemies_pending = 0
         self.next_spawn_time = 0
@@ -265,8 +219,8 @@ class PyTD:
                     self.new_game()
                     self.enemies = []
                     self.towers = []
-                    self.lives = 10
-                    self.money = 100
+                    self.lives = constants.INITIAL_LIVES
+                    self.money = constants.INITIAL_MONEY
                     self.state = "build"
                     print("Build phase started")
                 continue
@@ -276,8 +230,8 @@ class PyTD:
                     self.new_game()
                     self.enemies = []
                     self.towers = []
-                    self.lives = 10
-                    self.money = 100
+                    self.lives = constants.INITIAL_LIVES
+                    self.money = constants.INITIAL_MONEY
                     self.state = "build"
                     print("Restarting after game over")
                 return
