@@ -1,6 +1,8 @@
 from game_controller import GameController
 
+PyTD = GameController
+
 
 if __name__ == "__main__":
-    game = GameController()
+    game = PyTD()
     game.run()
