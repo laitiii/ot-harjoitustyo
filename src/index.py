@@ -129,7 +129,7 @@ class PyTD:
         )
         # AI Generated code ends
         if enemy_count > 0:
-            self.enemies = [Enemy(0, 1)]
+            self.enemies = [Enemy(0, 1, self.wave)]
             self.wave_enemies_pending = enemy_count - 1
             self.next_spawn_time = pygame.time.get_ticks() + self.spawn_interval
         else:
@@ -203,7 +203,7 @@ class PyTD:
         """Spawn the next queued enemy when its spawn time is reached."""
         current_time = pygame.time.get_ticks()
         if self.wave_enemies_pending > 0 and current_time >= self.next_spawn_time:
-            self.enemies.append(Enemy(0, 1))
+            self.enemies.append(Enemy(0, 1, self.wave))
             self.wave_enemies_pending -= 1
             self.next_spawn_time = current_time + self.spawn_interval
 

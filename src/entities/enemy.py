@@ -3,13 +3,16 @@ import math
 class Enemy:
     """Game enemy that follows a predefined path."""
 
-    def __init__(self, x, y):
+    BASE_HEALTH = 3
+    HEALTH_PER_WAVE = 1
+
+    def __init__(self, x, y, wave=1):
         self.x = x
         self.y = y
         self.target_index = 1
         self.speed = 0.05
-        self.reward = 5
-        self.health = 3
+        self.reward = 10
+        self.health = self.BASE_HEALTH + ((wave - 1) // 2) * self.HEALTH_PER_WAVE
 
     def move(self, path):
         """Move the enemy toward the next path waypoint."""
