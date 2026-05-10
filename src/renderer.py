@@ -38,11 +38,18 @@ class Renderer:
 
         font = pygame.font.SysFont(None, 36)
         instructions = font.render(
-            "Press SPACE to launch the next wave",
+            "Left click to build a turret",
             True,
             (255, 255, 255),
         )
         self.screen.blit(instructions, (10, 10))
+
+        instruction_hint = font.render(
+            "Press SPACE to launch the next wave",
+            True,
+            (255, 255, 255),
+        )
+        self.screen.blit(instruction_hint, (10, 50))
 
     def draw_status_bar(self, stats_text, wave_text=None):
         """Draw a bottom status bar with game stats and wave information."""
