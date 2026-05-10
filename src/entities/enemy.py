@@ -8,7 +8,7 @@ class Enemy:
         self.y = y
         self.target_index = 1
         self.speed = 0.05
-        self.reward = 10
+        self.reward = 5
         self.health = 3
 
     def move(self, path):

@@ -11,7 +11,11 @@ class PyTD:
     Manages the game loop, rendering, wave progression, and player state.
     """
     TILE_SIZE = 64
-    SPAWN_INTERVAL = 1000
+    BASE_ENEMIES = 3
+    ENEMIES_PER_WAVE = 2
+    SPAWN_INTERVAL = 700
+    MIN_SPAWN_INTERVAL = 100
+    SPAWN_INTERVAL_DECREASE = 50
 
     def __init__(self):
         pygame.init()
@@ -116,12 +120,17 @@ class PyTD:
 
         Spawns one enemy immediately and schedules the remaining enemies to spawn in intervals.
         """
-        enemy_count = self.wave * 2
-
+        # AI Generated code starts
+        enemy_count = self.BASE_ENEMIES + (self.wave - 1) * self.ENEMIES_PER_WAVE
+        self.spawn_interval = max(
+            self.MIN_SPAWN_INTERVAL,
+            self.SPAWN_INTERVAL - (self.wave - 1) * self.SPAWN_INTERVAL_DECREASE
+        )
+        # AI Generated code ends
         if enemy_count > 0:
             self.enemies = [Enemy(0, 1)]
             self.wave_enemies_pending = enemy_count - 1
-            self.next_spawn_time = pygame.time.get_ticks() + self.SPAWN_INTERVAL
+            self.next_spawn_time = pygame.time.get_ticks() + self.spawn_interval
         else:
             self.enemies = []
             self.wave_enemies_pending = 0
@@ -195,7 +204,7 @@ class PyTD:
         if self.wave_enemies_pending > 0 and current_time >= self.next_spawn_time:
             self.enemies.append(Enemy(0, 1))
             self.wave_enemies_pending -= 1
-            self.next_spawn_time = current_time + self.SPAWN_INTERVAL
+            self.next_spawn_time = current_time + self.spawn_interval
 
     def move_enemies(self):
         """Move each active enemy along the defined path."""
