@@ -38,3 +38,10 @@
 |  | 1 | Testien koodaus |
 |  | 1 | Docstring |
 ||||
+| Viikko 7| 9 | Loppupalautus |
+| 2.5 | 3 | Pelin koodaus |
+| 8.5 | 1 | Pelin koodin hionta ja viimeistely |
+| 8.5 | 1 | Sovelluslogiikan refaktorointi |
+| 10.5 | 2 | Arkkitehtuurikuvaus |
+| 10.5 | 2 | Dokumentaation viimeistely |
+||||
